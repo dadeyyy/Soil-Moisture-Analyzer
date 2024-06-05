@@ -11,7 +11,7 @@ import AirConditioning from '@/components/current_forecast/AirConditioning';
 
 async function getData() {
   const res = await fetch(
-    'https://api.open-meteo.com/v1/forecast?latitude=14.6799&longitude=120.5421&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,weather_code&daily=weather_code,apparent_temperature_max,apparent_temperature_min&timezone=Asia%2FSingapore'
+    'https://api.open-meteo.com/v1/forecast?latitude=14.6799&longitude=120.5421&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,weather_code&daily=weather_code,apparent_temperature_max,apparent_temperature_min&timezone=Asia%2FSingapore', {cache: 'no-store'}
   );
   if (!res.ok) {
     throw new Error('Failed to fetch data');
