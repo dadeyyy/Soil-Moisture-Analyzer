@@ -8,7 +8,7 @@ import WeatherIcon from '../icon/WeatherIcon';
 
 const HourlyForecast = () => {
    const {hourlyForecast} =  useHourlyForecast();
-   console.log("HOURLY FORECAST", hourlyForecast)
+
 
   return (
     <div className="rounded-3xl mb-5" style={{ background: '#202B3B' }}>
