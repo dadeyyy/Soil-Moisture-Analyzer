@@ -35,12 +35,14 @@ export type CurrentWeatherForecast = {
   hourly_units: {
     time: string;
     temperature_2m: string;
+    precipitation_probability: string;
     weather_code: string;
   };
   hourly: {
     time: string[];
     temperature_2m: number[];
     weather_code: number[];
+    precipitation_probability: number[]
   };
   daily_units: {
     time: string;
@@ -56,11 +58,11 @@ export type CurrentWeatherForecast = {
   };
 };
 
-type Feed = {
+type Feed ={
   created_at: string;
   entry_id: number;
-  field1: string | null;
-};
+  field1: string;
+}
 
 type Channel = {
   id: number;
@@ -68,14 +70,20 @@ type Channel = {
   latitude: string;
   longitude: string;
   field1: string;
-  field2: string;
-  field3: string;
   created_at: string;
   updated_at: string;
   last_entry_id: number;
-};
+}
 
-export type SoilMoistureType = {
+export type SoilMoistureType ={
   channel: Channel;
   feeds: Feed[];
+}
+
+
+
+export type recentData = {
+  created_at: string;
+  entry_id: number;
+  field1: string;
 };

@@ -19,7 +19,8 @@ const WeeklyForecast = ({ data }: { data: CurrentWeatherForecast }) => {
         time: hourlyTime,
         temperature: data.hourly.temperature_2m[index],
         code: data.hourly.weather_code[index],
-        isMorning: isMorningOrNight(hourlyTime)
+        isMorning: isMorningOrNight(hourlyTime),
+        precipitation_probability: data.hourly.precipitation_probability[index]
       }));
 
     updateHourlyForecast(first24HourlyForecasts); // Update the hourly forecast using the context function
@@ -36,7 +37,8 @@ const WeeklyForecast = ({ data }: { data: CurrentWeatherForecast }) => {
             time: hourlyTime,
             temperature: data.hourly.temperature_2m[index],
             code: data.hourly.weather_code[index],
-            isMorning: isMorningOrNight(hourlyTime)
+            isMorning: isMorningOrNight(hourlyTime),
+            precipitation_probability: data.hourly.precipitation_probability[index]
           });
         }
         return acc;

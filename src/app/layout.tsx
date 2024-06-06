@@ -17,12 +17,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link
-  rel="icon"
-  href="/soil.png"
-  type="image/<generated>"
-  sizes="<generated>"
-/>
       <body className={inter.className}>
         <HourlyForecastProvider>{children}</HourlyForecastProvider>
       </body>

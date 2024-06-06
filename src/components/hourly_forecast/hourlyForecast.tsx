@@ -1,7 +1,7 @@
 'use client'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useHourlyForecast } from '@/context/ForecastContext';
-import { time } from '@/lib/utils';
+
 import { formatDateRecent } from '@/lib/utils';
 import Image from 'next/image';
 import WeatherIcon from '../icon/WeatherIcon';

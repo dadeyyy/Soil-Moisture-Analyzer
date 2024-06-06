@@ -95,32 +95,76 @@ export function isMorningOrNight(dateString: string){
   } else {
       return 0;
   }
+
+}
+interface WeatherData {
+  time: string;
+  temperature: number;
+  code: number;
+  isMorning: number;
+  precipitation_probability: number;
+}
+
+export function findTimeSlot(apiData: WeatherData[], targetTime: string){
+  const targetDateTime = new Date(targetTime.replace('Z', ''));
+  const targetMinutes = targetDateTime.getMinutes();
+
+  if (targetMinutes >= 1 && targetMinutes <= 59) {
+      const nextHourDateTime = new Date(targetDateTime);
+      nextHourDateTime.setHours(nextHourDateTime.getHours() + 1);
+      nextHourDateTime.setMinutes(0);
+      nextHourDateTime.setSeconds(0);
+      nextHourDateTime.setMilliseconds(0);
+
+      // Check if targetTime is on the same date as the next hour
+      const targetDate = targetDateTime.toISOString().slice(0, 10); // Extracting only the date part
+      const nextHourDate = nextHourDateTime.toISOString().slice(0, 10);
+      if (targetDate === nextHourDate) {
+          for (let i = 0; i < apiData.length; i++) {
+              const dataTime = new Date(apiData[i].time);
+              if (dataTime.getTime() === nextHourDateTime.getTime()) {
+                  return i;
+              }
+          }
+      }
+  } else {
+      let nearestIndex: number | undefined = undefined;
+      let minDifference = Infinity;
+      apiData.forEach((data, index) => {
+          const dataTime = new Date(data.time);
+          const timeDifference = Math.abs(dataTime.getTime() - targetDateTime.getTime());
+          if (timeDifference < minDifference) {
+              minDifference = timeDifference;
+              nearestIndex = index;
+          }
+      });
+      return nearestIndex;
+  }
+
+  return undefined;
 }
 
 
-export const time = [
-  '2024-06-05T00:00',
-  '2024-06-05T01:00',
-  '2024-06-05T02:00',
-  '2024-06-05T03:00',
-  '2024-06-05T04:00',
-  '2024-06-05T05:00',
-  '2024-06-05T06:00',
-  '2024-06-05T07:00',
-  '2024-06-05T08:00',
-  '2024-06-05T09:00',
-  '2024-06-05T10:00',
-  '2024-06-05T11:00',
-  '2024-06-05T12:00',
-  '2024-06-05T13:00',
-  '2024-06-05T14:00',
-  '2024-06-05T15:00',
-  '2024-06-05T16:00',
-  '2024-06-05T17:00',
-  '2024-06-05T18:00',
-  '2024-06-05T19:00',
-  '2024-06-05T20:00',
-  '2024-06-05T21:00',
-  '2024-06-05T22:00',
-  '2024-06-05T23:00',
-];
+export function findMaxPrecipitation(hourlyForecast: WeatherData[], startIndex: number) {
+  if(startIndex === -1){
+    return undefined;
+  }
+  // Initialize a variable to store the maximum precipitation probability
+  let maxPrecipitation = 0;
+  let time = ''
+
+  // Loop through the hourlyForecast starting from the specified index
+  for (let i = startIndex; i < hourlyForecast.length; i++) {
+      const forecast = hourlyForecast[i];
+      const precipitationProbability = forecast.precipitation_probability;
+
+      // Update maxPrecipitation if the current precipitation probability is greater
+      if (precipitationProbability > maxPrecipitation) {
+          maxPrecipitation = precipitationProbability;
+          time = forecast.time
+      }
+  }
+
+  // Return the highest precipitation probability found
+  return {time, maxPrecipitation}
+}

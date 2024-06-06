@@ -16,10 +16,10 @@ const AirConditioning = ({data}: {data: CurrentWeatherForecast}) => {
                 <div className="flex justify-center items-center gap-3">
                   <Image src={'/air-conditions-icon/temp.png'} width={30} height={30} alt="" />
                   <span className="opacity-60 text-lg font-semibold">
-                    Feels Like
+                    Temperature
                   </span>
                 </div>
-                <span className="pl-10 text-3xl font-medium opacity-90">{data.current.apparent_temperature} {data.current_units.apparent_temperature}</span>
+                <span className="pl-10 text-3xl font-medium opacity-90">{data.current.temperature_2m} {data.current_units.temperature_2m}</span>
               </div>
               <div className="flex flex-col justify-center items-start gap-2">
                 <div className="flex justify-center items-center gap-3">
