@@ -54,7 +54,7 @@ const SoilMoistureHistory = ({
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">ID</TableHead>
-                <TableHead>Value</TableHead>
+                <TableHead>Moisture Content</TableHead>
                 <TableHead className="text-right">Date Created</TableHead>
               </TableRow>
             </TableHeader>
