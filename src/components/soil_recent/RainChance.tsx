@@ -13,6 +13,7 @@ interface RainChanceProps {
 const RainChance = ({ maxPrecipitation, moisture }: RainChanceProps) => {
   const moistureInt = parseInt(moisture);
   const maxPrec = maxPrecipitation?.maxPrecipitation;
+
     
   if (maxPrec === undefined) {
     return <></>;
@@ -33,7 +34,7 @@ const RainChance = ({ maxPrecipitation, moisture }: RainChanceProps) => {
       (
         <div className="flex flex-col gap-3">
           <span className="opacity-70">Low Moisture Content</span>
-          <span className="text-lg">Irrigate the crop for more adequate <br/> crop health and growth.</span>
+          <span className="text-lg">Irrigate the crop for more adequate crop health and growth.</span>
         </div>
       )}
 
@@ -41,7 +42,7 @@ const RainChance = ({ maxPrecipitation, moisture }: RainChanceProps) => {
       (
         <div className="flex flex-col gap-3">
           <span className="opacity-70">Low Moisture Content</span>
-          <span className="text-lg">You can choose not to irrigate <br/> the crop because high chance of rain is expected</span>
+          <span className="text-lg font-semibold">You can choose not to irrigate <br/> the crop because high chance of rain is expected.</span>
         </div>
       )}
 
@@ -56,7 +57,7 @@ const RainChance = ({ maxPrecipitation, moisture }: RainChanceProps) => {
       {(moistureInt >= 60 && moistureInt <= 100)&& (
         <div className="flex flex-col gap-3">
           <span className="opacity-70">High Moisture Content</span>
-          {maxPrec > 70 && (
+          {maxPrec >= 70 && (
             <span className='text-red-500'>
               Warning: The crop may suffer from too much water on the soil.
             </span>

@@ -34,7 +34,7 @@ export default async function Home() {
   const recentData = (await getRecentMoistureData()) as SoilMoistureType;
   const lastFeed = recentData.feeds[recentData.feeds.length - 1];
   const data = (await getData()) as CurrentWeatherForecast;
-  const date = formatDateRecent(new Date(data.current.time));
+  
 
   return (
     <main

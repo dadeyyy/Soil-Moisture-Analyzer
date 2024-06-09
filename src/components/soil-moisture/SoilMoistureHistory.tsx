@@ -27,6 +27,13 @@ const SoilMoistureHistory = ({
 }: {
   soilMoistureData: SoilMoistureType;
 }) => {
+
+  const data = soilMoistureData.feeds.sort((a, b) => {
+    const dateA = new Date(a.created_at).getTime();
+    const dateB = new Date(b.created_at).getTime();
+    return dateB - dateA;
+  });
+  
   return (
     <Dialog >
       <DialogTrigger asChild>
@@ -52,7 +59,7 @@ const SoilMoistureHistory = ({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {soilMoistureData.feeds.map((data) => (
+              {data.map((data) => (
                 <TableRow key={data.entry_id}>
                   <TableCell className="font-medium">{data.entry_id}</TableCell>
                   <TableCell>{data.field1}%</TableCell>
