@@ -16,8 +16,8 @@ const Recommendation = ({ created_at, soil_moisture }: { created_at: string, soi
   // 2024-06-16T07:36:33Z
   
   const index = findTimeSlot(hourlyForecast, created_at);
-  console.log('Hourly forecast', hourlyForecast)
-  console.log("Index ", index)
+  // console.log('Hourly forecast', hourlyForecast)
+  // console.log("Index ", index)
   const maxPrecipitation = findMaxPrecipitation(hourlyForecast, index || -1);
   
 

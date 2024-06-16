@@ -53,7 +53,7 @@ const WeeklyForecast = ({ data }: { data: CurrentWeatherForecast }) => {
 
   return (
     <section
-      className="flex flex-col rounded-3xl w-auto p-8 gap-8 sm:w-1/3"
+      className="flex flex-col rounded-3xl p-8 gap-8 w-full overflow-auto"
       style={{ background: '#202B3B' }}
     >
       <span className="font-semibold text-customColor">7-DAY FORECAST</span>

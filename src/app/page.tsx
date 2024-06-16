@@ -37,7 +37,7 @@ export default async function Home() {
   
   return (
     <main
-      className="bg-cover bg-center sm:h-screen text-white flex flex-col sm:flex-row p-8 gap-10"
+      className="bg-cover bg-center min-h-screen overflow-hidden text-white flex flex-col sm:flex-row p-8 gap-10"
       style={{ background: '#0B121C' }}
     >
       <link
