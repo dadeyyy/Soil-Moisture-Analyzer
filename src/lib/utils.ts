@@ -1,37 +1,26 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { parseISO } from 'date-fns';
+import { toZonedTime, format as formatTZ } from 'date-fns-tz';
 
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDateRecent(date: Date) {
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'Octover',
-    'November',
-    'December',
-  ];
-  const month = months[date.getMonth()];
-  const day = String(date.getDate()).padStart(2, '0');
-  const year = date.getFullYear();
-  let hours = date.getHours();
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // Handle midnight
-  const time = hours + ':' + minutes + ' ' + ampm;
+interface FormattedDate {
+  time: string;
+  date: string;
+}
 
-  return { time: `${time}`, date: `${month} ${day}, ${year}` };
+export function formatDateRecent(date: Date): FormattedDate {
+  const timeZone = 'Asia/Manila';
+  const zonedDate = toZonedTime(date, timeZone); // Convert to Manila time zone
+
+  const formattedDate = formatTZ(zonedDate, 'MMMM dd, yyyy', { timeZone });
+  const formattedTime = formatTZ(zonedDate, 'hh:mm aa', { timeZone });
+
+  return { time: formattedTime, date: formattedDate };
 }
 
 export function formatDate(date: Date) {
