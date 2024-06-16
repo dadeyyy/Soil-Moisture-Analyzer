@@ -12,6 +12,7 @@ const SoilMoistureRecent = async ({
   recentData: recentData;
 }) => {
   const date = formatDateRecent(new Date(recentData.created_at));
+  console.log(date)
   return (
     <div className="flex sm:flex-row flex-col gap-5 text-center justify-between sm:text-left items-start p-10 mb-2">
       <div className="flex flex-col gap-10">
