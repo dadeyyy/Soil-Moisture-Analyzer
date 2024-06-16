@@ -6,10 +6,18 @@ import RainChance from './RainChance';
 
 const Recommendation = ({ created_at, soil_moisture }: { created_at: string, soil_moisture:string }) => {
   const { hourlyForecast } = useHourlyForecast();
-  // const index = findTimeSlot(hourlyForecast, '2024-06-09T20:55:51Z');
+  // const index = findTimeSlot(hourlyForecast, '2024-06-16T20:55:51Z');
+  // const lastIndex = hourlyForecast.length-1;
+  // console.log('Hourly forecast', hourlyForecast);
+  // console.log('created_at', created_at);
+  // console.log(created_at)
+
+  // 2024-06-16T07:36:33Z
+
   const index = findTimeSlot(hourlyForecast, created_at);
   const maxPrecipitation = findMaxPrecipitation(hourlyForecast, index || -1);
-  console.log("Max precipitation", maxPrecipitation)
+  
+
   return (
     <div className="flex flex-col justify-center items-center gap-5 max-w-xs">
     

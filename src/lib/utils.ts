@@ -105,10 +105,18 @@ interface WeatherData {
   precipitation_probability: number;
 }
 
-export function findTimeSlot(apiData: WeatherData[], targetTime: string){
-  const targetDateTime = new Date(targetTime.replace('Z', ''));
+export function findTimeSlot(apiData: WeatherData[], targetTime: string) {
+  const targetDateTime = new Date(targetTime);
+  const today = new Date();
+  
+  // Check if target time is on the same date as today
+  if (targetDateTime.toDateString() !== today.toDateString()) {
+      return undefined;
+  }
+
   const targetMinutes = targetDateTime.getMinutes();
 
+  // Handling the next hour forecast
   if (targetMinutes >= 1 && targetMinutes <= 59) {
       const nextHourDateTime = new Date(targetDateTime);
       nextHourDateTime.setHours(nextHourDateTime.getHours() + 1);
@@ -116,33 +124,28 @@ export function findTimeSlot(apiData: WeatherData[], targetTime: string){
       nextHourDateTime.setSeconds(0);
       nextHourDateTime.setMilliseconds(0);
 
-      // Check if targetTime is on the same date as the next hour
-      const targetDate = targetDateTime.toISOString().slice(0, 10); // Extracting only the date part
-      const nextHourDate = nextHourDateTime.toISOString().slice(0, 10);
-      if (targetDate === nextHourDate) {
-          for (let i = 0; i < apiData.length; i++) {
-              const dataTime = new Date(apiData[i].time);
-              if (dataTime.getTime() === nextHourDateTime.getTime()) {
-                  return i;
-              }
+      for (let i = 0; i < apiData.length; i++) {
+          const dataTime = new Date(apiData[i].time);
+          if (dataTime.getTime() === nextHourDateTime.getTime()) {
+              return i;
           }
       }
-  } else {
-      let nearestIndex: number | undefined = undefined;
-      let minDifference = Infinity;
-      apiData.forEach((data, index) => {
-          const dataTime = new Date(data.time);
-          const timeDifference = Math.abs(dataTime.getTime() - targetDateTime.getTime());
-          if (timeDifference < minDifference) {
-              minDifference = timeDifference;
-              nearestIndex = index;
-          }
-      });
-      return nearestIndex;
   }
 
-  return undefined;
+  // Finding the nearest time slot
+  let nearestIndex: number | undefined = undefined;
+  let minDifference = Infinity;
+  apiData.forEach((data, index) => {
+      const dataTime = new Date(data.time);
+      const timeDifference = Math.abs(dataTime.getTime() - targetDateTime.getTime());
+      if (timeDifference < minDifference) {
+          minDifference = timeDifference;
+          nearestIndex = index;
+      }
+  });
+  return nearestIndex;
 }
+
 
 
 export function findMaxPrecipitation(hourlyForecast: WeatherData[], startIndex: number) {
