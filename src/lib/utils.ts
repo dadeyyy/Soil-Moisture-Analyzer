@@ -107,42 +107,48 @@ interface WeatherData {
 
 export function findTimeSlot(apiData: WeatherData[], targetTime: string) {
   const targetDateTime = new Date(targetTime);
-  const today = new Date();
-  
-  // Check if target time is on the same date as today
-  if (targetDateTime.toDateString() !== today.toDateString()) {
-      return undefined;
+  const now = new Date();  // This will give you the current time in the local time zone (Philippine Time)
+
+  // Convert 'now' to Philippine Time (UTC+8)
+  const today = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 3600000));
+
+  // Check if target time is on the same date as today in Philippine Time
+  if (targetDateTime.getFullYear() !== today.getFullYear() ||
+      targetDateTime.getMonth() !== today.getMonth() ||
+      targetDateTime.getDate() !== today.getDate()) {
+    return undefined;
   }
 
   const targetMinutes = targetDateTime.getMinutes();
 
-  // Handling the next hour forecast
+  // Handling the next hour forecast in Philippine Time
   if (targetMinutes >= 1 && targetMinutes <= 59) {
-      const nextHourDateTime = new Date(targetDateTime);
-      nextHourDateTime.setHours(nextHourDateTime.getHours() + 1);
-      nextHourDateTime.setMinutes(0);
-      nextHourDateTime.setSeconds(0);
-      nextHourDateTime.setMilliseconds(0);
+    const nextHourDateTime = new Date(targetDateTime.getTime());
+    nextHourDateTime.setHours(nextHourDateTime.getHours() + 1);
+    nextHourDateTime.setMinutes(0);
+    nextHourDateTime.setSeconds(0);
+    nextHourDateTime.setMilliseconds(0);
 
-      for (let i = 0; i < apiData.length; i++) {
-          const dataTime = new Date(apiData[i].time);
-          if (dataTime.getTime() === nextHourDateTime.getTime()) {
-              return i;
-          }
+    for (let i = 0; i < apiData.length; i++) {
+      const dataTime = new Date(apiData[i].time);
+      if (dataTime.getTime() === nextHourDateTime.getTime()) {
+        return i;
       }
+    }
   }
 
   // Finding the nearest time slot
   let nearestIndex: number | undefined = undefined;
   let minDifference = Infinity;
   apiData.forEach((data, index) => {
-      const dataTime = new Date(data.time);
-      const timeDifference = Math.abs(dataTime.getTime() - targetDateTime.getTime());
-      if (timeDifference < minDifference) {
-          minDifference = timeDifference;
-          nearestIndex = index;
-      }
+    const dataTime = new Date(data.time);
+    const timeDifference = Math.abs(dataTime.getTime() - targetDateTime.getTime());
+    if (timeDifference < minDifference) {
+      minDifference = timeDifference;
+      nearestIndex = index;
+    }
   });
+
   return nearestIndex;
 }
 

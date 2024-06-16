@@ -35,7 +35,6 @@ export default async function Home() {
   const lastFeed = recentData.feeds[recentData.feeds.length - 1];
   const data = (await getData()) as CurrentWeatherForecast;
   
-
   return (
     <main
       className="bg-cover bg-center sm:h-screen text-white flex flex-col sm:flex-row p-8 gap-10"
