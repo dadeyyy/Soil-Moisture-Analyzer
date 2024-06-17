@@ -11,7 +11,7 @@ import SoilMoistureHistory from '@/components/soil-moisture/SoilMoistureHistory'
 const getRecentMoistureData = async () => {
   const res = await fetch(
     'https://api.thingspeak.com/channels/2562479/fields/1.json', {
-      cache: 'no-store'
+      next: { revalidate: 15}
     }
   );
 
