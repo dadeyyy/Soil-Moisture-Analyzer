@@ -55,7 +55,7 @@ const SoilMoistureHistory = ({
               <TableRow>
                 <TableHead className="w-[100px]">ID</TableHead>
                 <TableHead>Moisture Content</TableHead>
-                <TableHead className="text-right">Date Created</TableHead>
+                <TableHead className="">Date Created</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -63,7 +63,7 @@ const SoilMoistureHistory = ({
                 <TableRow key={data.entry_id}>
                   <TableCell className="font-medium">{data.entry_id}</TableCell>
                   <TableCell>{data.field1}%</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="">
                     {formatDateRecent(new Date(data.created_at)).date}{' '}
                     {formatDateRecent(new Date(data.created_at)).time}
                   </TableCell>

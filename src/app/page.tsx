@@ -83,7 +83,7 @@ export default async function Home() {
 
         <AirConditioning data={data} />
       </section>
-
+      
       <WeeklyForecast data={data} />
     </main>
   );

@@ -58,13 +58,13 @@ export type CurrentWeatherForecast = {
   };
 };
 
-type Feed ={
+ export type Feed ={
   created_at: string;
   entry_id: number;
   field1: string;
 }
 
-type Channel = {
+export type Channel = {
   id: number;
   name: string;
   latitude: string;
